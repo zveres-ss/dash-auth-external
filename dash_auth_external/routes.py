@@ -48,6 +48,7 @@ def make_auth_route(
             client_id,
             redirect_uri=redirect_uri,
             scope=scope,
+            nonce="12345"
         )
 
         if with_pkce:
