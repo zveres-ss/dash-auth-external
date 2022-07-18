@@ -47,8 +47,7 @@ def make_auth_route(
         oauth_session = OAuth2Session(
             client_id,
             redirect_uri=redirect_uri,
-            scope=scope,
-            nonce="12345"
+            scope=scope
         )
 
         if with_pkce:
@@ -113,6 +112,14 @@ def make_access_token_route(
     token_request_headers: dict = None,
 ):
     @app.route(redirect_suffix, methods=["GET", "POST"])
+    def get_token_from_ancor():
+        return '''  <script type="text/javascript">
+                var state = window.location.href.split("state=")[1];
+                var code = window.location.href.split("code=")[1];
+                window.location = "{redirect_suffix}/auth_params?code=" + code + "&state=" + state;
+            </script> '''.format(redirect_suffix=redirect_suffix)
+
+    @app.route(redirect_suffix + "/auth_params", methods=["GET", "POST"])
     def get_token():
         url = request.url
         body = build_token_body(

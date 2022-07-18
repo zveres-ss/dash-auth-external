@@ -100,6 +100,7 @@ class DashAuthExternal:
             redirect_uri=redirect_uri,
             redirect_suffix=redirect_suffix,
             _home_suffix=home_suffix,
+            with_pkce=with_pkce,
             token_request_headers=token_request_headers,
             _token_field_name=_token_field_name,
         )
